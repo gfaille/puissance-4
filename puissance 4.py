@@ -1,3 +1,6 @@
+import os
+import time
+
 liste_grilles = [["_" for _ in range(7)] for _ in range(6)]
 
 def grille (grille) :
@@ -21,12 +24,15 @@ def jouer_coup (coup_jouer) :
             if liste_grilles[0][coup_jouer-1] == "_" :
                 coup_placer = -1
                 for i in range(6) :
+                    os.system("cls")
                     if liste_grilles[i][coup_jouer-1] == "_" :
                         liste_grilles[i][coup_jouer-1] = joueur
                         coup_placer += 1
 
                         if i > 0 :
                             liste_grilles[i-1][coup_jouer-1] = "_"
+                        grille(liste_grilles)
+                        time.sleep(0.1)
                     
                 return 
             else :
@@ -47,7 +53,8 @@ def verif_ligne_vertical (coup_jouer, coup_placer) :
             if liste_grilles[coup_placer][coup_jouer] == joueur :
                 gagner += 1
                 if gagner == 4 :
-                    print("gg vert")
+                    print(joueur, "à gagner !!")
+                    return True
             coup_placer += 1
 
 def verif_ligne_horizontal (coup_jouer, coup_placer) :
@@ -59,6 +66,14 @@ def verif_ligne_horizontal (coup_jouer, coup_placer) :
         4) verifier a partir du dernier jeton jouer à sa droite la difference et que si l'utilisateur joue au centre 
             il reprend le jeton à coter
     """
+
+    #############################################################
+    #                                                           #
+    #   reprend le dernier coup jouer et le coups placer        #
+    #   vérifie si 4 jetons sont aligner en partant a droite    #
+    #                                                           #
+    #############################################################
+
     coup_jouer -= 1
     coup_jouer_preced = coup_jouer
     gagner = 0
@@ -70,9 +85,18 @@ def verif_ligne_horizontal (coup_jouer, coup_placer) :
             if liste_grilles[coup_placer][coup_jouer] == joueur :
                 gagner += 1
                 if gagner == 4 :
-                    print("gg droite ")
+                    print(joueur, "à gagner !!")
+                    return True
             coup_jouer += 1
     
+
+    #########################################################
+    #                                                       #
+    #   reprend le dernier coup jouer et le coups placer    # 
+    #   -1 par rapport à l'index pour vérifier              #
+    #   si 4 jetons sont aligner en partant à droite        #
+    #                                                       #
+    #########################################################
     coup_jouer = coup_jouer_preced
     gagner = 0
     coup_jouer -= 1
@@ -83,8 +107,16 @@ def verif_ligne_horizontal (coup_jouer, coup_placer) :
             if liste_grilles[coup_placer][coup_jouer] == joueur :
                 gagner += 1
                 if gagner == 4 :
-                    print("gg droite")
+                    print(joueur, "à gagner !!")
+                    return True
             coup_jouer += 1
+
+    #########################################################
+    #                                                       #
+    #   reprend le dernier coup jouer et le coups placer    #
+    #   si 4 jetons sont aligner en partant à gauche        #
+    #                                                       #
+    #########################################################
 
     coup_jouer = coup_jouer_preced
     gagner = 0
@@ -95,21 +127,32 @@ def verif_ligne_horizontal (coup_jouer, coup_placer) :
             if liste_grilles[coup_placer][coup_jouer] == joueur :
                 gagner += 1
                 if gagner == 4 :
-                    print("gg gauche")
+                    print(joueur, "à gagner !!")
+                    return True
             coup_jouer -= 1
-    
+
+    #########################################################
+    #                                                       #
+    #   reprend le dernier coup jouer et le coups placer    #
+    #   +1 par rapport à l'index pour vérifier              #
+    #   si 4 jetons sont aligner en partant à gauche        #
+    #                                                       #
+    #########################################################
+
     coup_jouer = coup_jouer_preced
     gagner = 0
     coup_jouer += 1
-    for _ in range(4) :   
-        if coup_jouer >= 0 :
-            liste_grilles[coup_placer][coup_jouer]
+    for _ in range(4) : 
+        if coup_jouer <= 6 : 
+            if coup_jouer >= 0 :
+                liste_grilles[coup_placer][coup_jouer]
 
-            if liste_grilles[coup_placer][coup_jouer] == joueur :
-                gagner += 1
-                if gagner == 4 :
-                    print("gg gauche")
-            coup_jouer -= 1
+                if liste_grilles[coup_placer][coup_jouer] == joueur :
+                    gagner += 1
+                    if gagner == 4 :
+                        print(joueur, "à gagner !!")
+                        return True
+                coup_jouer -= 1
         
 def verif_ligne_diagonale_droite (coup_jouer, coup_placer) :
     """ 4 boucle for pour verifier diagonalement si 4 jeton sont aligner
@@ -131,7 +174,8 @@ def verif_ligne_diagonale_droite (coup_jouer, coup_placer) :
             if liste_grilles[coup_placer][coup_jouer] == joueur :
                 gagner += 1
                 if gagner == 4 :
-                    print("gg")
+                    print(joueur, "à gagner !!")
+                    return True
             coup_jouer += 1
             coup_placer +=1
     
@@ -146,7 +190,8 @@ def verif_ligne_diagonale_droite (coup_jouer, coup_placer) :
             if liste_grilles[coup_placer][coup_jouer] == joueur :
                 gagner += 1
                 if gagner == 4 :
-                    print("gg")
+                    print(joueur, "à gagner !!")
+                    return True
             coup_jouer -= 1
             coup_placer -=1
  
@@ -163,7 +208,8 @@ def verif_ligne_diagonale_droite (coup_jouer, coup_placer) :
             if liste_grilles[coup_placer][coup_jouer] == joueur :
                 gagner += 1
                 if gagner == 4 :
-                    print("gg")
+                    print(joueur, "à gagner !!")
+                    return True
             coup_jouer -= 1
             coup_placer -=1
 
@@ -180,7 +226,8 @@ def verif_ligne_diagonale_droite (coup_jouer, coup_placer) :
             if liste_grilles[coup_placer][coup_jouer] == joueur :
                 gagner += 1
                 if gagner == 4 :
-                    print("gg")
+                    print(joueur, "à gagner !!")
+                    return True
             coup_jouer += 1
             coup_placer +=1
 
@@ -204,7 +251,8 @@ def verif_ligne_diagonale_gauche (coup_jouer, coup_placer) :
             if liste_grilles[coup_placer][coup_jouer] == joueur :
                 gagner += 1
                 if gagner == 4 :
-                    print("gg")
+                    print(joueur, "à gagner !!")
+                    return True
             coup_jouer -= 1
             coup_placer +=1
     
@@ -219,7 +267,8 @@ def verif_ligne_diagonale_gauche (coup_jouer, coup_placer) :
             if liste_grilles[coup_placer][coup_jouer] == joueur :
                 gagner += 1
                 if gagner == 4 :
-                    print("gg")
+                    print(joueur, "à gagner !!")
+                    return True
             coup_jouer += 1
             coup_placer -=1
  
@@ -236,7 +285,8 @@ def verif_ligne_diagonale_gauche (coup_jouer, coup_placer) :
             if liste_grilles[coup_placer][coup_jouer] == joueur :
                 gagner += 1
                 if gagner == 4 :
-                    print("gg")
+                    print(joueur, "à gagner !!")
+                    return True
             coup_jouer -= 1
             coup_placer +=1
 
@@ -253,7 +303,8 @@ def verif_ligne_diagonale_gauche (coup_jouer, coup_placer) :
             if liste_grilles[coup_placer][coup_jouer] == joueur :
                 gagner += 1
                 if gagner == 4 :
-                    print("gg")
+                    print(joueur, "à gagner !!")
+                    return True
             coup_jouer += 1
             coup_placer -=1
             
@@ -261,6 +312,7 @@ joueur = "J"
 
 while True :
 
+    os.system("cls")
     #affiche la grille
     grille(liste_grilles)
 
@@ -268,7 +320,28 @@ while True :
 
     jouer_coup(coup_jouer)
     
-    verif_ligne_horizontal(coup_jouer, coup_placer)
-    verif_ligne_vertical(coup_jouer, coup_placer)
-    verif_ligne_diagonale_droite(coup_jouer, coup_placer)
-    verif_ligne_diagonale_gauche(coup_jouer, coup_placer)
+    if verif_ligne_horizontal(coup_jouer, coup_placer) :
+        grille(liste_grilles)
+        time.sleep(5)
+        os.system("cls")
+        break
+    elif verif_ligne_vertical(coup_jouer, coup_placer) :
+        grille(liste_grilles)
+        time.sleep(5)
+        os.system("cls")
+        break
+    elif verif_ligne_diagonale_droite(coup_jouer, coup_placer) :
+        grille(liste_grilles)
+        time.sleep(5)
+        os.system("cls")
+        break
+    elif verif_ligne_diagonale_gauche(coup_jouer, coup_placer) :
+        grille(liste_grilles)
+        time.sleep(5)
+        os.system("cls")
+        break
+
+    if joueur == "J" :
+        joueur = "R"
+    else :
+        joueur = "J"
